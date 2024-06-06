@@ -22,7 +22,7 @@ function getEndpointByToken($_endpoint, $_token)
 }
 
 $endpointParcelas = getEndpointByToken('http://localhost/03-back/v3/parcelas/', 'get');
-$endpointHistoria = getEndpointByToken('http://localhost/03-back/v3/historia/','get');
+$endpointHistoria = getEndpointByToken('http://localhost/03-back/v3/historia/', 'get');
 $endpointPreguntaFrecuente = getEndpointByToken('http://localhost/03-back/v3/pregunta-frecuente/', 'get');
 // echo $endpointServices;
 //transformar el contenido del endpoint en formato JSON
@@ -129,7 +129,7 @@ $endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
 
     <!-- Nosotros -->
 
-    <section id="nosotros" class="container">
+    <section id="nosotros" class="container p-5">
         <h2 class="text-center p-5">Nosotros</h2>
         <p class="fs-4 mb-4">En Terrasol Parcelas, nos destacamos como un referente en el mercado inmobiliario de la zona centro-sur de Chile, ofreciendo parcelas de 5000 metros cuadrados a partir de solo 1 millón de pesos. Nuestro enfoque innovador y centrado en el cliente nos diferencia, proporcionando tours virtuales de las propiedades para una exploración cómoda desde casa. También ofrecemos opciones de parcelas con casas para aquellos que buscan una solución llave en mano, combinando naturaleza y comodidades modernas.</p>
         <p class="fs-4 mb-4">Comprometidos con la accesibilidad financiera, facilitamos la adquisición de tierras mediante crédito directo, eliminando la necesidad de pasar por bancos y trámites complicados. En Terrasol Parcelas, convertimos la inversión en tierras en una posibilidad realista, ofreciendo no solo propiedades, sino un estilo de vida en armonía con la naturaleza.</p>
@@ -248,7 +248,7 @@ $endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
     <section id="parcelas" class="container">
         <h2 class="text-center p-5">Parcelas</h2>
         <div class="row">
-    
+
         </div>
     </section>
 
@@ -274,13 +274,13 @@ $endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
     <!-- Preguntas Frecuentes-->
 
     <section id="preguntas" class="container p-2">
-    <h2 class="text-center p-5">Preguntas Frecuentes</h2>
-    <div class="accordion" id="accordionPanelsStayOpenExample">
-        <!-- Las preguntas frecuentes se insertarán aquí -->
-    </div>
-</section>
+        <h2 class="text-center p-5">Preguntas Frecuentes</h2>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <!-- Las preguntas frecuentes se insertarán aquí -->
+        </div>
+    </section>
 
-</section>
+    </section>
 
     <!-- Contacto -->
     <div class="mb-4 pt-5" id="contacto">
@@ -452,63 +452,53 @@ $endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
         const contenidoEndpointParcelas = JSON.parse(<?php echo $endpointParcelas ?>);
         printParcelas(contenidoEndpointParcelas);
 
-        // const contenidoEndpointHistoria = JSON.parse(<?php echo $endpointHistoria ?>);
-        // printHistoria(contenidoEndpointHistoria);
-
-        const contenidoEndpointPreguntaFrecuente = JSON.parse(<?php echo $endpointPreguntaFrecuente?>);
+        const contenidoEndpointPreguntaFrecuente = JSON.parse(<?php echo $endpointPreguntaFrecuente ?>);
         printPreguntaFrecuente(contenidoEndpointPreguntaFrecuente);
 
-        // console.log(printPreguntaFrecuente);
+        const contenidoEndpointHistoria = JSON.parse(<?php echo $endpointHistoria ?>);
+        printHistoria(contenidoEndpointHistoria);
 
         function printParcelas(_datos) {
-    // console.log(_datos);
-    let totalColumnasSM = 0;
-    let totalColumnasMD = 0;
-    let totalColumnasXL = 0;
-    
-    // Calcula el total de columnas activas
-    _datos.data.forEach(element => {
-        if (element.activo === true) {
-            totalColumnasXL++;
-        }
-    });
+            let totalColumnasSM = 0;
+            let totalColumnasMD = 0;
+            let totalColumnasXL = 0;
 
-    // Calcula el número de columnas en cada tamaño
-    const totalColumnas = 12 / _datos.data.length;
-    if (_datos.data.length <= 4) {
-        totalColumnasXL = Math.round(12 / totalColumnasXL);
-    } else {
-        totalColumnasXL = 3;
-    }
-    totalColumnasMD = Math.round(totalColumnasXL * 2);
-    totalColumnasSM = Math.round(totalColumnasXL * 2 * 2);
-    // console.log(totalColumnasXL);
-    // console.log(totalColumnasMD);
-    // console.log(totalColumnasSM);
+            _datos.data.forEach(element => {
+                if (element.activo === true) {
+                    totalColumnasXL++;
+                }
+            });
 
-    // Selecciona el contenedor para las parcelas
-    const rowParcelas = document.querySelector('#parcelas .row');
-    rowParcelas.innerHTML = '';
+            const totalColumnas = 12 / _datos.data.length;
+            if (_datos.data.length <= 4) {
+                totalColumnasXL = Math.round(12 / totalColumnasXL);
+            } else {
+                totalColumnasXL = 3;
+            }
+            totalColumnasMD = Math.round(totalColumnasXL * 2);
+            totalColumnasSM = Math.round(totalColumnasXL * 2 * 2);
 
-    // Genera las columnas HTML
-    _datos.data.forEach(element => {
-        if (element.activo === true) {
-            const columna = document.createElement('div');
-            columna.classList.add('col-sm-' + totalColumnasSM);
-            columna.classList.add('col-md-' + totalColumnasMD);
-            columna.classList.add('col-xl-' + totalColumnasXL);
-            columna.classList.add('my-2');
+            const rowParcelas = document.querySelector('#parcelas .row');
+            rowParcelas.innerHTML = '';
 
-            const tarjeta = document.createElement('div');
-            tarjeta.classList.add('card', 'w-100');
+            _datos.data.forEach(element => {
+                if (element.activo === true) {
+                    const columna = document.createElement('div');
+                    columna.classList.add('col-sm-' + totalColumnasSM);
+                    columna.classList.add('col-md-' + totalColumnasMD);
+                    columna.classList.add('col-xl-' + totalColumnasXL);
+                    columna.classList.add('my-2');
 
-            const tarjetaHeader = document.createElement('div');
-            tarjetaHeader.classList.add('card-header');
-            tarjetaHeader.innerHTML = '<h5 class="card-title">' + element.nombre + '</h5>';
+                    const tarjeta = document.createElement('div');
+                    tarjeta.classList.add('card', 'w-100');
 
-            const tarjetaBody = document.createElement('div');
-            tarjetaBody.classList.add('card-body');
-            tarjetaBody.innerHTML = `
+                    const tarjetaHeader = document.createElement('div');
+                    tarjetaHeader.classList.add('card-header');
+                    tarjetaHeader.innerHTML = '<h5 class="card-title">' + element.nombre + '</h5>';
+
+                    const tarjetaBody = document.createElement('div');
+                    tarjetaBody.classList.add('card-body');
+                    tarjetaBody.innerHTML = `
                 <p><strong>Pie:</strong> ${element.pie}</p>
                 <p><strong>Terreno Ancho:</strong> ${element.terreno_ancho}</p>
                 <p><strong>Terreno Largo:</strong> ${element.terreno_largo}</p>
@@ -518,74 +508,84 @@ $endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
                 <p><strong>Valor:</strong> ${element.valor}</p>
             `;
 
-            const tarjetaFooter = document.createElement('div');
-            tarjetaFooter.classList.add('card-footer');
-            tarjetaFooter.innerHTML = '<a href="#contacto"><button class="btn btn-primary" onclick="cambiarServicio(\'' + element.id + '\')">Contáctanos</button></a>';
+                    const tarjetaFooter = document.createElement('div');
+                    tarjetaFooter.classList.add('card-footer');
+                    tarjetaFooter.innerHTML = '<a href="#contacto"><button class="btn btn-primary" onclick="cambiarServicio(\'' + element.id + '\')">Contáctanos</button></a>';
 
-            tarjeta.appendChild(tarjetaHeader);
-            tarjeta.appendChild(tarjetaBody);
-            tarjeta.appendChild(tarjetaFooter);
+                    tarjeta.appendChild(tarjetaHeader);
+                    tarjeta.appendChild(tarjetaBody);
+                    tarjeta.appendChild(tarjetaFooter);
 
-            columna.appendChild(tarjeta);
-            rowParcelas.appendChild(columna);
+                    columna.appendChild(tarjeta);
+                    rowParcelas.appendChild(columna);
+                }
+            });
+        }
+
+        function printPreguntaFrecuente(_datos) {
+            const accordion = document.getElementById('accordionPanelsStayOpenExample');
+
+            _datos.data.forEach((element, index) => {
+                const preguntaId = element.id ? `panelsStayOpen-collapse-${element.id}` : `panelsStayOpen-collapse-${index}`;
+                const isExpanded = index === 0 ? 'true' : 'false';
+
+                const accordionItem = document.createElement('div');
+                accordionItem.classList.add('accordion-item');
+
+                const accordionHeader = document.createElement('h2');
+                accordionHeader.classList.add('accordion-header');
+
+                const accordionButton = document.createElement('button');
+                accordionButton.classList.add('accordion-button', 'fs-4');
+                accordionButton.setAttribute('type', 'button');
+                accordionButton.setAttribute('data-bs-toggle', 'collapse');
+                accordionButton.setAttribute('data-bs-target', `#${preguntaId}`);
+                accordionButton.setAttribute('aria-expanded', isExpanded);
+                accordionButton.setAttribute('aria-controls', preguntaId);
+                accordionButton.textContent = element.pregunta;
+
+                const accordionCollapse = document.createElement('div');
+                accordionCollapse.classList.add('accordion-collapse', 'collapse');
+                accordionCollapse.setAttribute('id', preguntaId);
+
+                const accordionBody = document.createElement('div');
+                accordionBody.classList.add('accordion-body');
+                accordionBody.innerHTML = `<p>${element.respuesta}</p>`;
+
+                accordionHeader.appendChild(accordionButton);
+                accordionCollapse.appendChild(accordionBody);
+                accordionItem.appendChild(accordionHeader);
+                accordionItem.appendChild(accordionCollapse);
+
+                accordion.appendChild(accordionItem);
+            });
+
+            // Agregar un evento para cerrar los paneles de acordeón al abrir uno nuevo
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    accordionButtons.forEach(btn => {
+                        if (btn !== button) {
+                            btn.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            });
+        }
+
+        function printHistoria(_datos) {
+    const nosotrosSection = document.getElementById('nosotros');
+    nosotrosSection.innerHTML = '';
+
+    _datos.data.forEach(element => {
+        if (element.tipo === 'parrafo' || element.tipo === 'titulo' || element.tipo === 'subtitulo') {
+            const textoElement = document.createElement(element.tipo === 'parrafo' ? 'p' : 'h2');
+            textoElement.classList.add('fs-4', 'mb-4');
+            textoElement.textContent = element.texto;
+            nosotrosSection.appendChild(textoElement);
         }
     });
 }
-
-// Preguntas Frecuentes
-function printPreguntaFrecuente(_datos) {
-    console.log(_datos);
-    const accordion = document.getElementById('accordionPanelsStayOpenExample');
-
-    _datos.data.forEach((element, index) => {
-        const preguntaId = element.id ? `panelsStayOpen-collapse-${element.id}` : `panelsStayOpen-collapse-${index}`;
-        const isExpanded = index === 0 ? 'true' : 'false';
-
-        const accordionItem = document.createElement('div');
-        accordionItem.classList.add('accordion-item');
-
-        const accordionHeader = document.createElement('h2');
-        accordionHeader.classList.add('accordion-header');
-
-        const accordionButton = document.createElement('button');
-        accordionButton.classList.add('accordion-button', 'fs-4');
-        accordionButton.setAttribute('type', 'button');
-        accordionButton.setAttribute('data-bs-toggle', 'collapse');
-        accordionButton.setAttribute('data-bs-target', `#${preguntaId}`);
-        accordionButton.setAttribute('aria-expanded', isExpanded);
-        accordionButton.setAttribute('aria-controls', preguntaId);
-        accordionButton.textContent = element.pregunta;
-
-        const accordionCollapse = document.createElement('div');
-        accordionCollapse.classList.add('accordion-collapse', 'collapse');
-        accordionCollapse.setAttribute('id', preguntaId);
-
-        const accordionBody = document.createElement('div');
-        accordionBody.classList.add('accordion-body');
-        accordionBody.innerHTML = `<p>${element.respuesta}</p>`;
-
-        accordionHeader.appendChild(accordionButton);
-        accordionCollapse.appendChild(accordionBody);
-        accordionItem.appendChild(accordionHeader);
-        accordionItem.appendChild(accordionCollapse);
-
-        accordion.appendChild(accordionItem);
-    });
-
-    // Agregar un evento para cerrar los paneles de acordeón al abrir uno nuevo
-    const accordionButtons = document.querySelectorAll('.accordion-button');
-    accordionButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            accordionButtons.forEach(btn => {
-                if (btn !== button) {
-                    btn.setAttribute('aria-expanded', 'false');
-                }
-            });
-        });
-    });
-}
-
-
     </script>
 
 </body>
