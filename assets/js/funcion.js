@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Validación del formulario
     var form = document.getElementById('contactForm');
     form.addEventListener('submit', function(event) {
-      // Validar campos del formulario
       if (form.checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
@@ -16,9 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
           terms: document.getElementById('terms').checked,
         };
         console.log('Form Data:', formData);
-        // Aquí puedes enviar formData al servidor usando fetch o XMLHttpRequest
+
       }
       form.classList.add('was-validated');
     }, false);
   });
+  
+
   
