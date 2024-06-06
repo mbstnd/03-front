@@ -274,47 +274,13 @@ $endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
     <!-- Preguntas Frecuentes-->
 
     <section id="preguntas" class="container p-2">
-        <h2 class="text-center p-5">Preguntas Frecuentes</h2>
-        <div class="accordion" id="accordionPanelsStayOpenExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button fs-4" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                        ¿Cómo solicito una cotización?
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                    <div class="accordion-body">
-                        <p>Puedes contactarnos al correo contacto@energyandwater.cl o al +56232569798.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed fs-4" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                        ¿Necesitas visita técnica?
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
-                    <div class="accordion-body">
-                        <p>Puedes solicitar visita técnica para evaluación mediante correo electrónico
-                            Contacto@energyandwater.cl o al +56232569798.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed fs-4" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                        ¿Qué tipo de aire acondicionado pueden revisar?
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                    <div class="accordion-body">
-                        <p>Revisamos, reparamos e instalamos equipos domiciliarios e industriales.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <h2 class="text-center p-5">Preguntas Frecuentes</h2>
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        <!-- Las preguntas frecuentes se insertarán aquí -->
+    </div>
+</section>
+
+</section>
 
     <!-- Contacto -->
     <div class="mb-4 pt-5" id="contacto">
@@ -486,14 +452,16 @@ $endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
         const contenidoEndpointParcelas = JSON.parse(<?php echo $endpointParcelas ?>);
         printParcelas(contenidoEndpointParcelas);
 
-        const contenidoEndpointHistoria = JSON.parse(<?php echo $endpointHistoria ?>);
-        printHistoria(contenidoEndpointHistoria);
+        // const contenidoEndpointHistoria = JSON.parse(<?php echo $endpointHistoria ?>);
+        // printHistoria(contenidoEndpointHistoria);
 
         const contenidoEndpointPreguntaFrecuente = JSON.parse(<?php echo $endpointPreguntaFrecuente?>);
         printPreguntaFrecuente(contenidoEndpointPreguntaFrecuente);
 
+        // console.log(printPreguntaFrecuente);
+
         function printParcelas(_datos) {
-    console.log(_datos);
+    // console.log(_datos);
     let totalColumnasSM = 0;
     let totalColumnasMD = 0;
     let totalColumnasXL = 0;
@@ -514,9 +482,9 @@ $endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
     }
     totalColumnasMD = Math.round(totalColumnasXL * 2);
     totalColumnasSM = Math.round(totalColumnasXL * 2 * 2);
-    console.log(totalColumnasXL);
-    console.log(totalColumnasMD);
-    console.log(totalColumnasSM);
+    // console.log(totalColumnasXL);
+    // console.log(totalColumnasMD);
+    // console.log(totalColumnasSM);
 
     // Selecciona el contenedor para las parcelas
     const rowParcelas = document.querySelector('#parcelas .row');
@@ -563,6 +531,55 @@ $endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
         }
     });
 }
+
+// Preguntas Frecuentes
+function printPreguntaFrecuente(_datos) {
+    console.log(_datos);
+    const accordion = document.getElementById('accordionPanelsStayOpenExample');
+
+    _datos.data.forEach((element, index) => {
+        const preguntaId = element.id ? `panelsStayOpen-collapse-${element.id}` : `panelsStayOpen-collapse-${index}`;
+        const isExpanded = index === 0 ? 'true' : 'false';
+        const collapseClass = index === 0 ? 'show' : '';
+
+        const accordionItem = document.createElement('div');
+        accordionItem.classList.add('accordion-item');
+
+
+        const accordionHeader = document.createElement('h2');
+        accordionHeader.classList.add('accordion-header');
+
+        const accordionButton = document.createElement('button');
+        accordionButton.classList.add('accordion-button', 'fs-4');
+        accordionButton.setAttribute('type', 'button');
+        accordionButton.setAttribute('data-bs-toggle', 'collapse');
+        accordionButton.setAttribute('data-bs-target', `#${preguntaId}`);
+        accordionButton.setAttribute('aria-expanded', isExpanded);
+        accordionButton.setAttribute('aria-controls', preguntaId);
+        accordionButton.textContent = element.pregunta;
+
+        const accordionCollapse = document.createElement('div');
+        accordionCollapse.classList.add('accordion-collapse');
+        
+        accordionCollapse.setAttribute('id', preguntaId);
+
+        const accordionBody = document.createElement('div');
+        accordionBody.classList.add('accordion-body');
+        accordionBody.innerHTML = `<p>${element.respuesta}</p>`;
+
+        accordionHeader.appendChild(accordionButton);
+        accordionCollapse.appendChild(accordionBody);
+        accordionItem.appendChild(accordionHeader);
+        accordionItem.appendChild(accordionCollapse);
+
+        accordion.appendChild(accordionItem); // Agregar el nuevo elemento al contenedor del acordeón
+    });
+}
+
+
+
+
+
 
 
     </script>
