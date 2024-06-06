@@ -20,11 +20,15 @@ function getEndpointByToken($_endpoint, $_token)
     curl_close($ch);
     return $respuesta;
 }
-// echo 'esto es PHP';
+
 $endpointParcelas = getEndpointByToken('http://localhost/03-back/v3/parcelas/', 'get');
+$endpointHistoria = getEndpointByToken('http://localhost/03-back/v3/historia/','get');
+$endpointPreguntaFrecuente = getEndpointByToken('http://localhost/03-back/v3/pregunta-frecuente/', 'get');
 // echo $endpointServices;
 //transformar el contenido del endpoint en formato JSON
 $endpointParcelas = json_encode($endpointParcelas);
+$endpointHistoria = json_encode($endpointHistoria);
+$endpointPreguntaFrecuente = json_encode($endpointPreguntaFrecuente);
 // echo $endpointParcelas;
 
 ?>
@@ -481,6 +485,12 @@ $endpointParcelas = json_encode($endpointParcelas);
     <script>
         const contenidoEndpointParcelas = JSON.parse(<?php echo $endpointParcelas ?>);
         printParcelas(contenidoEndpointParcelas);
+
+        const contenidoEndpointHistoria = JSON.parse(<?php echo $endpointHistoria ?>);
+        printHistoria(contenidoEndpointHistoria);
+
+        const contenidoEndpointPreguntaFrecuente = JSON.parse(<?php echo $endpointPreguntaFrecuente?>);
+        printPreguntaFrecuente(contenidoEndpointPreguntaFrecuente);
 
         function printParcelas(_datos) {
     console.log(_datos);
