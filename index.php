@@ -540,11 +540,9 @@ function printPreguntaFrecuente(_datos) {
     _datos.data.forEach((element, index) => {
         const preguntaId = element.id ? `panelsStayOpen-collapse-${element.id}` : `panelsStayOpen-collapse-${index}`;
         const isExpanded = index === 0 ? 'true' : 'false';
-        const collapseClass = index === 0 ? 'show' : '';
 
         const accordionItem = document.createElement('div');
         accordionItem.classList.add('accordion-item');
-
 
         const accordionHeader = document.createElement('h2');
         accordionHeader.classList.add('accordion-header');
@@ -559,8 +557,7 @@ function printPreguntaFrecuente(_datos) {
         accordionButton.textContent = element.pregunta;
 
         const accordionCollapse = document.createElement('div');
-        accordionCollapse.classList.add('accordion-collapse');
-        
+        accordionCollapse.classList.add('accordion-collapse', 'collapse');
         accordionCollapse.setAttribute('id', preguntaId);
 
         const accordionBody = document.createElement('div');
@@ -572,14 +569,21 @@ function printPreguntaFrecuente(_datos) {
         accordionItem.appendChild(accordionHeader);
         accordionItem.appendChild(accordionCollapse);
 
-        accordion.appendChild(accordionItem); // Agregar el nuevo elemento al contenedor del acordeón
+        accordion.appendChild(accordionItem);
+    });
+
+    // Agregar un evento para cerrar los paneles de acordeón al abrir uno nuevo
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            accordionButtons.forEach(btn => {
+                if (btn !== button) {
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
     });
 }
-
-
-
-
-
 
 
     </script>
