@@ -25,7 +25,7 @@ $endpointParcelas = getEndpointByToken('http://localhost/03-back/v3/parcelas/', 
 // echo $endpointServices;
 //transformar el contenido del endpoint en formato JSON
 $endpointParcelas = json_encode($endpointParcelas);
-// echo $endpointServices;
+// echo $endpointParcelas;
 
 ?>
 
@@ -44,7 +44,7 @@ $endpointParcelas = json_encode($endpointParcelas);
 
 <body>
 
- <!-- Navbar -->
+    <!-- Navbar -->
     <header>
         <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top p-4">
             <div class="container-fluid">
@@ -77,7 +77,7 @@ $endpointParcelas = json_encode($endpointParcelas);
         </nav>
     </header>
 
- <!-- Hero Carrusel -->
+    <!-- Hero Carrusel -->
     <div id="carouselExampleCaptions" class="carousel slide">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -244,48 +244,10 @@ $endpointParcelas = json_encode($endpointParcelas);
     <section id="parcelas" class="container">
         <h2 class="text-center p-5">Parcelas</h2>
         <div class="row">
-            <div class="col-md-3 mb-4 d-flex">
-                <div class="card w-100">
-                    <img src="./assets/img/03-parcela.jpg" class="card-img-top" alt="una imagen">
-                    <div class="card-body">
-                        <h5 class="card-title">Imagen Parcela</h5>
-                        <p class="card-text"></p>
-                        <a href="#contacto" class="btn btn-primary mt-auto">Contáctanos</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4 d-flex">
-                <div class="card w-100">
-                    <img src="./assets/img/01-casa.jpg" class="card-img-top" alt="una imagen">
-                    <div class="card-body">
-                        <h5 class="card-title">Imagen Casa en Parcela</h5>
-                        <p class="card-text"></p>
-                        <a href="#contacto" class="btn btn-primary mt-auto">Contáctanos</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4 d-flex">
-                <div class="card w-100">
-                    <img src="./assets/img/02-casa.jpg" class="card-img-top" alt="una imagen">
-                    <div class="card-body">
-                        <h5 class="card-title">Imagen Financiamiento</h5>
-                        <p class="card-text"></p>
-                        <a href="#contacto" class="btn btn-primary mt-auto">Contáctanos</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4 d-flex">
-                <div class="card w-100">
-                    <img src="./assets/img/03-parcela.jpg" class="card-img-top" alt="una imagen">
-                    <div class="card-body">
-                        <h5 class="card-title">Mantenimiento para edificios</h5>
-                        <p class="card-text"></p>
-                        <a href="#contacto" class="btn btn-primary mt-auto">Contáctanos</a>
-                    </div>
-                </div>
-            </div>
+    
         </div>
     </section>
+
 
     <!-- Servicios -->
 
@@ -350,7 +312,7 @@ $endpointParcelas = json_encode($endpointParcelas);
         </div>
     </section>
 
-     <!-- Contacto -->
+    <!-- Contacto -->
     <div class="mb-4 pt-5" id="contacto">
         <div class="container">
             <div class="row">
@@ -517,64 +479,82 @@ $endpointParcelas = json_encode($endpointParcelas);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="./assets/js/funcion.js"></script>
     <script>
-        let = contenidoEndpointParcelas = JSON.parse(<?php echo $endpointParcelas ?>)
+        const contenidoEndpointParcelas = JSON.parse(<?php echo $endpointParcelas ?>);
         printParcelas(contenidoEndpointParcelas);
 
-        function printServices(_datos) {
-            // console.log(datos);
-            let totalColumnasSM = 0;
-            let totalColumnasMD = 0;
-            let totalColumnasXL = 0;
-            _datos.data.forEach(element => {
-                if (element.activo == true) {
-                    totalColumnasXL++;
-                }
-            });
-
-            // const totalColumnas = 12 / _datos.data.length;
-            //¿cuantos elementos necesito generar?
-            //4 por fila
-            if (_datos.data.length <= 4) {
-                totalColumnasXL = Math.round(12 / totalColumnasXL);
-            } else {
-                totalColumnasXL = 3;
-            }
-            totalColumnasMD = Math.round(totalColumnasXL * 2);
-            totalColumnasSM = Math.round(totalColumnasXL * 2 * 2);
-            // console.log(totalColumnasXL);
-            // console.log(totalColumnasMD);
-            // console.log(totalColumnasSM);
-            // console.log('propiedad md-' + totalColumnas);
-            const rowParcelas = document.getElementById('nosotros');
-            rowParcelas.innerHTML = '';
-            _datos.data.forEach(element => {
-                // console.log(element);
-                if (element.activo == true) {
-                    const columna = document.createElement('div');
-                    columna.classList.add('col-sm-' + totalColumnasSM);
-                    columna.classList.add('col-md-' + totalColumnasMD);
-                    columna.classList.add('col-xl-' + totalColumnasXL);
-                    columna.classList.add('my-2');
-                    const tarjeta = document.createElement('div');
-                    tarjeta.classList.add('card');
-                    tarjeta.classList.add('h-100');
-                    const tarjetaHeader = document.createElement('div');
-                    tarjetaHeader.classList.add('card');
-                    const tarjetaBody = document.createElement('div');
-                    tarjetaBody.classList.add('card-body');
-                    const tarjetaFooter = document.createElement('div');
-                    tarjetaFooter.classList.add('card-footer');
-                    tarjetaFooter.innerHTML = '<a href="#contacto"><button onclick="cambiarServicio(`' + element.id + '`)">Contáctanos</button></a>'
-                    tarjetaHeader.innerHTML = '<h5 class="card-title">' + element.titulo.esp + '</h5>';
-                    tarjetaBody.innerHTML = '<p>' + element.texto.esp + '</p>';
-                    tarjeta.appendChild(tarjetaHeader);
-                    tarjeta.appendChild(tarjetaBody);
-                    tarjeta.appendChild(tarjetaFooter);
-                    columna.appendChild(tarjeta);
-                    rowParcelas.appendChild(columna);
-                }
-            });
+        function printParcelas(_datos) {
+    console.log(_datos);
+    let totalColumnasSM = 0;
+    let totalColumnasMD = 0;
+    let totalColumnasXL = 0;
+    
+    // Calcula el total de columnas activas
+    _datos.data.forEach(element => {
+        if (element.activo === true) {
+            totalColumnasXL++;
         }
+    });
+
+    // Calcula el número de columnas en cada tamaño
+    const totalColumnas = 12 / _datos.data.length;
+    if (_datos.data.length <= 4) {
+        totalColumnasXL = Math.round(12 / totalColumnasXL);
+    } else {
+        totalColumnasXL = 3;
+    }
+    totalColumnasMD = Math.round(totalColumnasXL * 2);
+    totalColumnasSM = Math.round(totalColumnasXL * 2 * 2);
+    console.log(totalColumnasXL);
+    console.log(totalColumnasMD);
+    console.log(totalColumnasSM);
+
+    // Selecciona el contenedor para las parcelas
+    const rowParcelas = document.querySelector('#parcelas .row');
+    rowParcelas.innerHTML = '';
+
+    // Genera las columnas HTML
+    _datos.data.forEach(element => {
+        if (element.activo === true) {
+            const columna = document.createElement('div');
+            columna.classList.add('col-sm-' + totalColumnasSM);
+            columna.classList.add('col-md-' + totalColumnasMD);
+            columna.classList.add('col-xl-' + totalColumnasXL);
+            columna.classList.add('my-2');
+
+            const tarjeta = document.createElement('div');
+            tarjeta.classList.add('card', 'w-100');
+
+            const tarjetaHeader = document.createElement('div');
+            tarjetaHeader.classList.add('card-header');
+            tarjetaHeader.innerHTML = '<h5 class="card-title">' + element.nombre + '</h5>';
+
+            const tarjetaBody = document.createElement('div');
+            tarjetaBody.classList.add('card-body');
+            tarjetaBody.innerHTML = `
+                <p><strong>Pie:</strong> ${element.pie}</p>
+                <p><strong>Terreno Ancho:</strong> ${element.terreno_ancho}</p>
+                <p><strong>Terreno Largo:</strong> ${element.terreno_largo}</p>
+                <p><strong>Terreno Despejado de Árboles:</strong> ${element.terreno_despejado_arboles}</p>
+                <p><strong>Ubicación Latitud:</strong> ${element.ubicacion_latitud_gm}</p>
+                <p><strong>Ubicación Longitud:</strong> ${element.ubicacion_longitud_gm}</p>
+                <p><strong>Valor:</strong> ${element.valor}</p>
+            `;
+
+            const tarjetaFooter = document.createElement('div');
+            tarjetaFooter.classList.add('card-footer');
+            tarjetaFooter.innerHTML = '<a href="#contacto"><button class="btn btn-primary" onclick="cambiarServicio(\'' + element.id + '\')">Contáctanos</button></a>';
+
+            tarjeta.appendChild(tarjetaHeader);
+            tarjeta.appendChild(tarjetaBody);
+            tarjeta.appendChild(tarjetaFooter);
+
+            columna.appendChild(tarjeta);
+            rowParcelas.appendChild(columna);
+        }
+    });
+}
+
+
     </script>
 
 </body>
